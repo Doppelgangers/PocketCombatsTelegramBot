@@ -1,15 +1,17 @@
+import os
 from typing import Tuple
-
+import config
 import cv2
 import numpy as np
 import pytesseract
 
 
 class Action_xp_page:
+    path_template = os.path.join(os.getcwd(), "modules", "get_xp_for_next_lvl", "templates")
 
     def __init__(self):
-        pytesseract.pytesseract.tesseract_cmd = r'D:\programs\tesseract\tesseract.exe'
-        self.template = cv2.imread(r"D:\dev\PocketCombatsTelegramBot\modules\get_xp_for_next_lvl\templates\template.png", 0)
+        pytesseract.pytesseract.tesseract_cmd = config.PATH_TESSERACT
+        self.template = cv2.imread(os.path.join(self.path_template, "template.png"), 0)
 
     def find_xp_area(self, image) -> np.ndarray:
         """
@@ -49,8 +51,3 @@ class Action_xp_page:
         # print(str_xp)
         now_xp, need_xp = self.str_to_int(str_xp)
         return now_xp, need_xp
-
-
-# ac = Action_xp_page()
-# x = ac.get_xp("123.png")
-# print(x)
